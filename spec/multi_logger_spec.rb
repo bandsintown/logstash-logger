@@ -29,4 +29,18 @@ describe LogStashLogger::MultiLogger do
 
     multi_logger.info("test")
   end
+
+  describe "#formatter=" do
+    it "doesn't update the formatter if it's already set" do
+      subject.loggers.each do |logger|
+        logger.formatter = :json_lines
+      end
+
+      subject.formatter = :json
+
+      subject.loggers.each do |logger|
+        expect(logger.formatter).to eq(:json_lines)
+      end
+    end
+  end
 end
